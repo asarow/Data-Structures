@@ -94,18 +94,23 @@ public class BST <E> {
 	return recursiveFind(root, data);
     }
 
-    public void displayData() {
+    public void display() {
 	inorder(root);
     }
 
-    public void invertTree() {
+    public void invert() {
 	if (root == null) return;
 	recursiveInvert(root);
     }
 
 
-    private void recursiveInvert(BSTNode node) {
-	if (node == null) return;	
+    private BSTNode recursiveInvert(BSTNode node) {
+	if (node == null) return null;	
+
+	BSTNode oldLeftNode = node.getLeftChild();
+	node.setLeftChild(recursiveInvert(node.getRightChild()));
+	node.setRightChild(recursiveInvert(oldLeftNode));
+	return node;
     }
 
     private void inorder(BSTNode node) {
