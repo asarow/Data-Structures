@@ -111,6 +111,62 @@ public class LinkedList<E> {
 	return curr.getNext().getData();
     }
 
+    /* Using this method breaks a the doubly-linked
+       list implementation. */
+    public void reverseSingly() {
+	if (size == 1) return;
+
+	if (size == 2) {
+	    Node temp = head.getNext();
+	    head.setNext(temp.getNext());
+	    head.getNext().setNext(temp);
+	    head.getNext().getNext().setNext(tail);
+	    return;
+	}
+	
+	Node firstNode = head.getNext();
+	Node nodeToReverse = firstNode.getNext();
+	Node nextNode = nodeToReverse.getNext();
+	
+	while(nextNode != tail) {
+	    nodeToReverse.setNext(head.getNext());
+	    head.setNext(nodeToReverse);
+	    nodeToReverse = nextNode;
+	    nextNode = nextNode.getNext();
+	}
+
+	nodeToReverse.setNext(head.getNext());
+	head.setNext(nodeToReverse);
+	firstNode.setNext(tail);
+    }
+
+    public void reverseDoubly() {
+	if (size == 1) return;
+
+	if (size == 2) {
+	    Node temp = head.getNext();
+	    head.setNext(tail.getPrev());
+	    head.getNext().setPrev(head);
+	    head.getNext().setNext(temp);
+	    head.getNext().getNext().setPrev(head.getNext());
+	    head.getNext().getNext().setNext(tail);
+	    tail.setPrev(head.getNext().getNext());
+	    return;
+	}
+
+	Node nodeToReverse = head.getNext().getNext();
+	while (nodeToReverse != tail) {
+	    Node tempNode = nodeToReverse.getNext();;
+	    nodeToReverse.getPrev().setNext(nodeToReverse.getNext());
+	    nodeToReverse.getNext().setPrev(nodeToReverse.getPrev());
+	    head.getNext().setPrev(nodeToReverse);
+	    nodeToReverse.setNext(head.getNext());
+	    head.setNext(nodeToReverse);
+	    nodeToReverse.setPrev(head);
+	    nodeToReverse = tempNode;
+	}
+    }
+
     public int size() {
 	return size;
     }
