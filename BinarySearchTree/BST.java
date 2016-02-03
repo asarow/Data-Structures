@@ -94,11 +94,37 @@ public class BST <E> {
 	return recursiveFind(root, data);
     }
 
+    public void displayData() {
+	inorder(root);
+    }
+
+    public void invertTree() {
+	if (root == null) return;
+	recursiveInvert(root);
+    }
+
+
+    private void recursiveInvert(BSTNode node) {
+	if (node == null) return;	
+    }
+
+    private void inorder(BSTNode node) {
+	if (node == null) return;
+
+	inorder(node.getLeftChild());
+	System.out.println(node.getData());
+	inorder(node.getRightChild());
+    }
+
     private boolean recursiveInsert(BSTNode node, E data) {
-	if (node == null) {
-	    node = new BSTNode(null, null, node, data);
+	if (node.getLeftChild() == null && node.compareTo(data) == 1) {
+	    BSTNode newNode = new BSTNode(null, null, node, data);
+	    node.setLeftChild(newNode);
 	    size++;
-	    return true;
+	} else if (node.getRightChild() == null && node.compareTo(data) == -1) {
+	    BSTNode newNode = new BSTNode(null, null, node, data);
+	    node.setRightChild(newNode);
+	    size++;
 	}
 	
 	if (node.compareTo(data) == 1) {
@@ -120,5 +146,9 @@ public class BST <E> {
 	} else {
 	    return false;
 	}
+    }
+
+    public int getSize() {
+	return size;
     }
 }
