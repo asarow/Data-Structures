@@ -139,9 +139,20 @@ public class BST <E> {
 	recursiveInvert(root);
     }
 
+    /* Compares structure, not values */
+    public boolean compareBST(BSTNode root) {
+	return recursiveCompare(this.root, root); 
+    }
+
+    public BSTNode root() {
+	return root;
+    }
+
     public int size() {
 	return size;
     }
+    
+    /* Begin private helper methods */
 
     private BSTNode recursiveInvert(BSTNode node) {
 	if (node == null) return null;	
@@ -150,14 +161,6 @@ public class BST <E> {
 	node.setLeftChild(recursiveInvert(node.getRightChild()));
 	node.setRightChild(recursiveInvert(oldLeftNode));
 	return node;
-    }
-
-    private void inorder(BSTNode node) {
-	if (node == null) return;
-
-	inorder(node.getLeftChild());
-	System.out.println(node + " " + node.getData());
-	inorder(node.getRightChild());
     }
 
     private boolean recursiveInsert(BSTNode node, E data) {
@@ -192,6 +195,17 @@ public class BST <E> {
 	} else {
 	    return false;
 	}
+    }
+    
+    private boolean recursiveCompare(BSTNode n1, BSTNode n2) {
+	if (n1 == null && n2 == null) return true;
+	if (n1 == null && n2 != null) return false;
+	if (n1 != null && n2 == null) return false;
+
+	boolean isLeftSubtreeSame = recursiveCompare(n1.getLeftChild(), n2.getLeftChild());
+	boolean isRightSubtreeSame = recursiveCompare(n1.getRightChild(), n2.getRightChild());
+
+	return (isLeftSubtreeSame && isRightSubtreeSame);
     }
 
     private BSTNode retrieveBSTNode(BSTNode node, E data) {
@@ -239,4 +253,14 @@ public class BST <E> {
 	}
 	tempNode = null;
     }
+    
+    private void inorder(BSTNode node) {
+	if (node == null) return;
+
+	inorder(node.getLeftChild());
+	System.out.println(node + " " + node.getData());
+	inorder(node.getRightChild());
+    }
+
+
 }
