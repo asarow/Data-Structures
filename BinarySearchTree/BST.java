@@ -139,7 +139,7 @@ public class BST <E> {
 	recursiveInvert(root);
     }
 
-    public int getSize() {
+    public int size() {
 	return size;
     }
 
