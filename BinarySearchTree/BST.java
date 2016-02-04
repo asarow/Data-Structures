@@ -106,12 +106,12 @@ public class BST <E> {
 		} else {
 		    node.getRightChild().setParent(node.getParent());
 		    node.getParent().setRightChild(node.getRightChild());
-		    clipMinNode(null);;
+		    clipMinNode(node);
 		}
 	    } else if (node.getRightChild() == null) {
 		node.getLeftChild().setParent(node.getParent());
 		node.getParent().setLeftChild(node.getLeftChild());
-		clipMinNode(null);
+		clipMinNode(node);
 	    } else {
 		BSTNode minNode = findMin(node.getRightChild());
 		if (node.getParent().getLeftChild() == node) {
