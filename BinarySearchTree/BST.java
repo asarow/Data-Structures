@@ -1,5 +1,7 @@
-import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
 import java.lang.Math;
 
 public class BST <E> {
@@ -56,19 +58,8 @@ public class BST <E> {
 	public E getData() {
 	    return this.data;
 	}           
-
-	/* Temporary CompareTo which only works with numeric data 
-	public int compareTo(Node n2) {
-	    if ((int) this.data > (int) n2.getData()) {
-		return 1;
-	    } else if ((int) this.data < (int) n2.getData()) {
-		return -1;
-	    } else {
-		return 0;
-	    }
-	}
-	*/
-
+	
+	/* Comparator only works with Integers */
 	public int compareTo(E data) {
 	    if ((Integer) this.data > (Integer) data) {
 		return 1;
@@ -81,20 +72,30 @@ public class BST <E> {
     } //End BSTNode
     
     /* Begin BST Implementation */
+
+    // Does not guarantee balance
+    public void randomInsert(List<E> data) {
+	Collections.shuffle(data);
+	insert(data);
+    }
     
+    public void insert(List<E> data) {
+	for (E x : data) {
+	    insert(x);
+	}
+    }
+
     public boolean insert(E data) {
 	if (root == null) {
 	    root = new BSTNode(null, null, null, data);
 	    size++;
 	    return true;
-	}
-	
+	}	
 	return recursiveInsert(root, data);
     }
 
     public boolean find (E data) {
-	if (root.compareTo(data) == 0) return true;
-	
+	if (root.compareTo(data) == 0) return true;	
 	return recursiveFind(root, data);
     }
 
@@ -184,6 +185,12 @@ public class BST <E> {
     
     public int height() {
 	return findHeight(root);
+    }
+
+    public boolean isBalanced() {
+	int leftSubtreeHeight = findHeight(root.getLeftChild());
+	int rightSubtreeHeight = findHeight(root.getRightChild());
+	return (Math.abs(leftSubtreeHeight-rightSubtreeHeight) < 2 ? true : false);
     }
 
     /* Begin private helper methods */
@@ -312,31 +319,6 @@ public class BST <E> {
 	    tempNode.getParent().setRightChild(null);
 	}
 	tempNode = null;
-    }
-    
-    private void singleRightRotation(BSTNode node) {
-	BSTNode newNode = node.getLeftChild();
-	
-	if (node.getParent() != null) {
-	    newNode.setParent(node.getParent());
-	    node.getParent().setRightChild(newNode);
-	}
-	node.setLeftChild(newNode.getRightChild());
-	newNode.setRightChild(node);
-	node.setParent(newNode);
-    }
-
-    private void singleLeftRotation(BSTNode node) {
-	BSTNode newNode = node.getRightChild();
-	
-	if (node.getParent() != null) {
-	    newNode.setParent(node.getParent());
-	    node.getParent().setLeftChild(newNode);
-	}
-	
-	node.setRightChild(newNode.getLeftChild());
-	newNode.setLeftChild(node);
-	node.setParent(newNode);	
     }
 
     private int findHeight(BSTNode node) {
