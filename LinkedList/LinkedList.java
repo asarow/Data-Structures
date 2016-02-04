@@ -110,6 +110,31 @@ public class LinkedList<E> {
 	
 	return curr.getNext().getData();
     }
+    
+    public boolean isCycle() {	
+	
+	if (size == 0) return false;
+
+	Node slowPointer = head;
+	Node fastPointer = head.getNext();
+	
+	//Uncomment below to test cycle
+	//tail.getPrev().setNext(head.getNext());
+	while (fastPointer != slowPointer) {
+	    if (fastPointer == null || fastPointer.getNext() == null) 
+		break;
+	    fastPointer = fastPointer.getNext().getNext();
+	    slowPointer = slowPointer.getNext();
+	}
+	
+	//Uncomment to remove cycle
+	//tail.getPrev().setNext(tail);
+	return (fastPointer == slowPointer);
+    }
+    
+    public void sort() {
+	
+    }
 
     /* Using this method breaks a the doubly-linked
        list implementation. */
