@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+import java.util.ArrayList;
+
 public class BST <E> {
     private BSTNode root;
     private int size;
@@ -137,6 +140,23 @@ public class BST <E> {
     public void invert() {
 	if (root == null) return;
 	recursiveInvert(root);
+    }
+
+    public ArrayList<E> getLevelOrder() {
+	LinkedList<BSTNode> queue = new LinkedList<BSTNode>();
+	ArrayList<E> arr = new ArrayList<E>();
+
+	BSTNode curr = root;
+	queue.add(curr);
+	while(!queue.isEmpty()) {
+	    arr.add(queue.removeFirst().getData());
+	    if (curr.getLeftChild() != null)
+		queue.add(curr.getLeftChild());
+	    if (curr.getRightChild() != null)
+		queue.add(curr.getRightChild());
+	    curr = queue.peekFirst();	   
+	}
+	return arr;
     }
 
     /* Compares structure, not values */
@@ -286,6 +306,4 @@ public class BST <E> {
 	System.out.println(node + " " + node.getData());
 	inorder(node.getRightChild());
     }
-
-
 }
