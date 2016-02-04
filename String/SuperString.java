@@ -12,8 +12,7 @@ public class SuperString {
 	StringBuilder sb = new StringBuilder("");
 	for (int i = string.length()-1; i > -1; --i) {
 	    sb.append(string.charAt(i));
-	}
-	
+	}	
 	string = sb.toString();
     }
 
@@ -80,6 +79,7 @@ public class SuperString {
     public void clear() {
 	string = "";
     }
+
     public String trimDigits() {
 	string = string.replaceAll("[0-9]+", "");
 	return string;
@@ -110,5 +110,4 @@ public class SuperString {
 	string = sb.toString();
 	return string;
     }
-
 }
