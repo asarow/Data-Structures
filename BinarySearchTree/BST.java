@@ -1,15 +1,16 @@
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.lang.Math;
 
 public class BST <E> {
-    protected BSTNode root;
-    protected int size;
+    private BSTNode root;
+    private int size;
     
     BST() {
 	size = 0;
     }
     
-    protected class BSTNode {
+    private class BSTNode {
 	private BSTNode left;
 	private BSTNode right;
 	private BSTNode parent;
@@ -180,10 +181,14 @@ public class BST <E> {
     public E findMax() {
 	return recursiveFindMax(root);
     }
+    
+    public int height() {
+	return findHeight(root);
+    }
 
     /* Begin private helper methods */
 
-    protected boolean recursiveInsert(BSTNode node, E data) {
+    private boolean recursiveInsert(BSTNode node, E data) {
 	if (node.getLeftChild() == null && node.compareTo(data) == 1) {
 	    BSTNode newNode = new BSTNode(null, null, node, data);
 	    node.setLeftChild(newNode);
@@ -205,7 +210,7 @@ public class BST <E> {
 	}
     }
 
-    protected boolean recursiveFind(BSTNode node, E data) {
+    private boolean recursiveFind(BSTNode node, E data) {
 	if (node.compareTo(data) == 0) return true;
 	
 	if (node.compareTo(data) == 1) {
@@ -217,7 +222,7 @@ public class BST <E> {
 	}
     }
     
-    protected E recursiveFindMin(BSTNode node) {
+    private E recursiveFindMin(BSTNode node) {
 	if (node == null) return null;
 	if (node.getLeftChild() == null) {
 	    return node.getData();
@@ -226,7 +231,7 @@ public class BST <E> {
 	return recursiveFindMin(node.getLeftChild());
     }
 
-    protected E recursiveFindMax(BSTNode node) {
+    private E recursiveFindMax(BSTNode node) {
 	if (node == null) return null;
 	if (node.getRightChild() == null) {
 	    return node.getData();
@@ -234,8 +239,17 @@ public class BST <E> {
 	
 	return recursiveFindMax(node.getRightChild());
     }
+
+    private BSTNode recursiveInvert(BSTNode node) {
+	if (node == null) return null;	
+	
+	BSTNode oldLeftNode = node.getLeftChild();
+	node.setLeftChild(recursiveInvert(node.getRightChild()));
+	node.setRightChild(recursiveInvert(oldLeftNode));
+	return node;
+    }
     
-    protected BSTNode retrieveBSTNode(BSTNode node, E data) {
+    private BSTNode retrieveBSTNode(BSTNode node, E data) {
 	if (node.compareTo(data) == 0) {
 	    return node;
 	}
@@ -249,21 +263,12 @@ public class BST <E> {
 	}
     }
 
-    protected void inorder(BSTNode node) {
+    private void inorder(BSTNode node) {
 	if (node == null) return;
 
 	inorder(node.getLeftChild());
 	System.out.println(node + " " + node.getData());
 	inorder(node.getRightChild());
-    }
-
-    private BSTNode recursiveInvert(BSTNode node) {
-	if (node == null) return null;	
-	
-	BSTNode oldLeftNode = node.getLeftChild();
-	node.setLeftChild(recursiveInvert(node.getRightChild()));
-	node.setRightChild(recursiveInvert(oldLeftNode));
-	return node;
     }
 
     private boolean recursiveCompare(BSTNode n1, BSTNode n2) {
@@ -307,5 +312,35 @@ public class BST <E> {
 	    tempNode.getParent().setRightChild(null);
 	}
 	tempNode = null;
+    }
+    
+    private void singleRightRotation(BSTNode node) {
+	BSTNode newNode = node.getLeftChild();
+	
+	if (node.getParent() != null) {
+	    newNode.setParent(node.getParent());
+	    node.getParent().setRightChild(newNode);
+	}
+	node.setLeftChild(newNode.getRightChild());
+	newNode.setRightChild(node);
+	node.setParent(newNode);
+    }
+
+    private void singleLeftRotation(BSTNode node) {
+	BSTNode newNode = node.getRightChild();
+	
+	if (node.getParent() != null) {
+	    newNode.setParent(node.getParent());
+	    node.getParent().setLeftChild(newNode);
+	}
+	
+	node.setRightChild(newNode.getLeftChild());
+	newNode.setLeftChild(node);
+	node.setParent(newNode);	
+    }
+
+    private int findHeight(BSTNode node) {
+	if (node == null) return -1;	
+	return 1+Math.max(findHeight(node.getLeftChild()), findHeight(node.getRightChild()));
     }
 }
