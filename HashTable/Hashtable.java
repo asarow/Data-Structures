@@ -1,6 +1,10 @@
 import java.util.LinkedList;
 import java.util.ArrayList;
 
+/** Hashtable with separate chaining. This implementation
+ *  is closer to a Hashmap in that it allows one null key
+ *  and is not synchronized. 
+*/
 public class Hashtable <K,V> {
     private ArrayList<Entry> entry;
     private int capacity;
