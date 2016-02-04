@@ -193,7 +193,7 @@ public class BST <E> {
 	return (Math.abs(leftSubtreeHeight-rightSubtreeHeight) < 2 ? true : false);
     }
 
-    //Begin private helper methods
+    //Begin helper methods
 
     private boolean recursiveInsert(BSTNode node, E data) {
 	if (node.getLeftChild() == null && node.compareTo(data) == 1) {
