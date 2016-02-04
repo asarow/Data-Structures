@@ -57,20 +57,38 @@ public class Hashtable <K,V> {
     }
     
     public void put(K key, V value) {
+	if (contains(key)) return;
+
 	int index = hash(key);
 	Entry curr = entry.get(index);
-	while (curr.getNext() != null) {
+	boolean isDuplicate = false;
+	
+	while (curr.getNext() != null) {	    
 	    curr = curr.getNext();
 	}
+
 	Entry newEntry = new Entry(key, value, curr, null);
 	curr.setNext(newEntry);
-	size++;
+	size++;	
     }   
 
     public double loadFactor() {
 	return (double) size / (double) capacity;
     }
     
+    public boolean contains(K key) {
+	int indexOfKey = hash(key);
+	Entry curr = entry.get(indexOfKey);
+	boolean isInTable = false;
+	while(curr.getNext() != null) {
+	    if (curr.getNext().getKey().equals(key)) {
+		isInTable = true;
+		break;
+	    }
+	    curr = curr.getNext();
+	} return isInTable;
+	
+    }
     
     public void display() {
 	for (Entry x : entry) {
