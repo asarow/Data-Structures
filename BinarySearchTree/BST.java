@@ -165,10 +165,12 @@ public class BST <E> {
 	    BSTNode newNode = new BSTNode(null, null, node, data);
 	    node.setLeftChild(newNode);
 	    size++;
+	    return true;
 	} else if (node.getRightChild() == null && node.compareTo(data) == -1) {
 	    BSTNode newNode = new BSTNode(null, null, node, data);
 	    node.setRightChild(newNode);
 	    size++;
+	    return true;
 	}
 	
 	if (node.compareTo(data) == 1) {
