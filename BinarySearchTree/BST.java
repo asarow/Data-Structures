@@ -102,16 +102,16 @@ public class BST <E> {
 	} else {
 	    if (node.getLeftChild() == null) {	   
 		if (node.getRightChild() == null) {
-		    clipMinNode(node);
+		    clipNode(node);
 		} else {
 		    node.getRightChild().setParent(node.getParent());
 		    node.getParent().setRightChild(node.getRightChild());
-		    clipMinNode(node);
+		    clipNode(node);
 		}
 	    } else if (node.getRightChild() == null) {
 		node.getLeftChild().setParent(node.getParent());
 		node.getParent().setLeftChild(node.getLeftChild());
-		clipMinNode(node);
+		clipNode(node);
 	    } else {
 		BSTNode minNode = findMin(node.getRightChild());
 		if (node.getParent().getLeftChild() == node) {
@@ -124,7 +124,7 @@ public class BST <E> {
 		minNode.setLeftChild(node.getLeftChild());
 		minNode.setRightChild(node.getRightChild());
 		node = null;
-		clipMinNode(minNode);
+		clipNode(minNode);
 	    }
 	    return true;
 	}
@@ -218,7 +218,7 @@ public class BST <E> {
 	}
     }
 
-    private void clipMinNode(BSTNode node) {
+    private void clipNode(BSTNode node) {
 	BSTNode tempNode = root;
 	BSTNode nodeToFind = node;
 	
@@ -236,18 +236,5 @@ public class BST <E> {
 	    tempNode.getParent().setRightChild(null);
 	}
 	tempNode = null;
-    }
-
-    public void preorder() {
-	doit(root);
-    }
-
-    private void doit(BSTNode node) {
-	if (node == null) 
-	    return;
-	
-	System.out.println(node.getData() + " " + node.getParent());
-	doit(node.getLeftChild());
-	doit(node.getRightChild());
     }
 }
