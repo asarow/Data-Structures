@@ -2,14 +2,14 @@ import java.util.LinkedList;
 import java.util.ArrayList;
 
 public class BST <E> {
-    private BSTNode root;
-    private int size;
+    protected BSTNode root;
+    protected int size;
     
     BST() {
 	size = 0;
     }
     
-    private class BSTNode {
+    protected class BSTNode {
 	private BSTNode left;
 	private BSTNode right;
 	private BSTNode parent;
@@ -129,6 +129,7 @@ public class BST <E> {
 		node = null;
 		clipNode(minNode);
 	    }
+	    size--;
 	    return true;
 	}
     }
@@ -181,17 +182,8 @@ public class BST <E> {
     }
 
     /* Begin private helper methods */
-    
-    private BSTNode recursiveInvert(BSTNode node) {
-	if (node == null) return null;	
 
-	BSTNode oldLeftNode = node.getLeftChild();
-	node.setLeftChild(recursiveInvert(node.getRightChild()));
-	node.setRightChild(recursiveInvert(oldLeftNode));
-	return node;
-    }
-
-    private boolean recursiveInsert(BSTNode node, E data) {
+    protected boolean recursiveInsert(BSTNode node, E data) {
 	if (node.getLeftChild() == null && node.compareTo(data) == 1) {
 	    BSTNode newNode = new BSTNode(null, null, node, data);
 	    node.setLeftChild(newNode);
@@ -213,7 +205,7 @@ public class BST <E> {
 	}
     }
 
-    private boolean recursiveFind(BSTNode node, E data) {
+    protected boolean recursiveFind(BSTNode node, E data) {
 	if (node.compareTo(data) == 0) return true;
 	
 	if (node.compareTo(data) == 1) {
@@ -225,7 +217,7 @@ public class BST <E> {
 	}
     }
     
-    private E recursiveFindMin(BSTNode node) {
+    protected E recursiveFindMin(BSTNode node) {
 	if (node == null) return null;
 	if (node.getLeftChild() == null) {
 	    return node.getData();
@@ -234,7 +226,7 @@ public class BST <E> {
 	return recursiveFindMin(node.getLeftChild());
     }
 
-    private E recursiveFindMax(BSTNode node) {
+    protected E recursiveFindMax(BSTNode node) {
 	if (node == null) return null;
 	if (node.getRightChild() == null) {
 	    return node.getData();
@@ -242,22 +234,12 @@ public class BST <E> {
 	
 	return recursiveFindMax(node.getRightChild());
     }
-    private boolean recursiveCompare(BSTNode n1, BSTNode n2) {
-	if (n1 == null && n2 == null) return true;
-	if (n1 == null && n2 != null) return false;
-	if (n1 != null && n2 == null) return false;
-
-	boolean isLeftSubtreeSame = recursiveCompare(n1.getLeftChild(), n2.getLeftChild());
-	boolean isRightSubtreeSame = recursiveCompare(n1.getRightChild(), n2.getRightChild());
-
-	return (isLeftSubtreeSame && isRightSubtreeSame);
-    }
-
-    private BSTNode retrieveBSTNode(BSTNode node, E data) {
-	if (node.compareTo(data) == 0) //return node;
-	    {
-		return node;
-	    }
+    
+    protected BSTNode retrieveBSTNode(BSTNode node, E data) {
+	if (node.compareTo(data) == 0) {
+	    return node;
+	}
+	
 	if (node.compareTo(data) == 1) {
 	    return retrieveBSTNode(node.getLeftChild(), data);
 	} else if (node.compareTo(data) == -1) {
@@ -267,6 +249,34 @@ public class BST <E> {
 	}
     }
 
+    protected void inorder(BSTNode node) {
+	if (node == null) return;
+
+	inorder(node.getLeftChild());
+	System.out.println(node + " " + node.getData());
+	inorder(node.getRightChild());
+    }
+
+    private BSTNode recursiveInvert(BSTNode node) {
+	if (node == null) return null;	
+	
+	BSTNode oldLeftNode = node.getLeftChild();
+	node.setLeftChild(recursiveInvert(node.getRightChild()));
+	node.setRightChild(recursiveInvert(oldLeftNode));
+	return node;
+    }
+
+    private boolean recursiveCompare(BSTNode n1, BSTNode n2) {
+	if (n1 == null && n2 == null) return true;
+	if (n1 == null && n2 != null) return false;
+	if (n1 != null && n2 == null) return false;
+	
+	boolean isLeftSubtreeSame = recursiveCompare(n1.getLeftChild(), n2.getLeftChild());
+	boolean isRightSubtreeSame = recursiveCompare(n1.getRightChild(), n2.getRightChild());
+	
+	return (isLeftSubtreeSame && isRightSubtreeSame);
+    }
+    
     private BSTNode findMin(BSTNode root) {
 	if (root.getLeftChild() == null && root.getRightChild() == null) {
 	    return root;
@@ -297,13 +307,5 @@ public class BST <E> {
 	    tempNode.getParent().setRightChild(null);
 	}
 	tempNode = null;
-    }
-    
-    private void inorder(BSTNode node) {
-	if (node == null) return;
-
-	inorder(node.getLeftChild());
-	System.out.println(node + " " + node.getData());
-	inorder(node.getRightChild());
     }
 }
