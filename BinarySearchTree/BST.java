@@ -152,8 +152,16 @@ public class BST <E> {
 	return size;
     }
     
-    /* Begin private helper methods */
+    public E findMin() {
+	return recursiveFindMin(root);
+    }
 
+    public E findMax() {
+	return recursiveFindMax(root);
+    }
+
+    /* Begin private helper methods */
+    
     private BSTNode recursiveInvert(BSTNode node) {
 	if (node == null) return null;	
 
@@ -197,6 +205,23 @@ public class BST <E> {
 	}
     }
     
+    private E recursiveFindMin(BSTNode node) {
+	if (node == null) return null;
+	if (node.getLeftChild() == null) {
+	    return node.getData();
+	}
+	
+	return recursiveFindMin(node.getLeftChild());
+    }
+
+    private E recursiveFindMax(BSTNode node) {
+	if (node == null) return null;
+	if (node.getRightChild() == null) {
+	    return node.getData();
+	}
+	
+	return recursiveFindMax(node.getRightChild());
+    }
     private boolean recursiveCompare(BSTNode n1, BSTNode n2) {
 	if (n1 == null && n2 == null) return true;
 	if (n1 == null && n2 != null) return false;
