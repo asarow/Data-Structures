@@ -51,6 +51,7 @@ public class Stack <E> {
 	
 	E dataToRemove = top.getNext().getData();
 	top.setNext(top.getNext().getNext());
+	size--;
 	return dataToRemove;
     }
 
