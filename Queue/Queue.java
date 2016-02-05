@@ -1,23 +1,19 @@
 public class Queue <E> {
-    private Node front;
-    private Node rear;
-    private int size;
-    private int capacity;
-    private final int DEFAULT_CAPACITY = 16;
+    protected Node front;
+    protected int size;
+    protected int capacity;
+    protected final int DEFAULT_CAPACITY = 16;
 
     Queue(int capacity) {
-	front = new Node(null, null, rear);
-	rear = new Node(null, front, null);
+	front = new Node(null, null);
 	this.size = 0;
 	this.capacity = capacity;
     }
 
     Queue() {
-	front = new Node(null, null, rear);
-	rear = new Node(null, front, null);
+	front = new Node(null, null);;
 	this.size = 0;
 	this.capacity = DEFAULT_CAPACITY;
-
     }
 
     protected class Node {
@@ -27,6 +23,11 @@ public class Queue <E> {
 
 	Node(E data) {
 	    this.data = data;
+	}
+
+	Node(E data, Node next) {
+	    this.data = data;
+	    this.next = next;
 	}
 	 
 	Node(E data, Node prev, Node next) {
@@ -60,7 +61,7 @@ public class Queue <E> {
 	if (size == capacity) return false;
 
 	if (front.getNext() == null) {
-	    front.setNext(new Node(item, front, null));
+	    front.setNext(new Node(item, front));
 	    size++;
 	    return true;
 	}
@@ -75,7 +76,7 @@ public class Queue <E> {
 	return true;
     }
     
-    public E peek() {
+    private E peek() {
 	return front.getNext().getData();
     }
 
