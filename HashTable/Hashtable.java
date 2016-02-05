@@ -103,7 +103,7 @@ public class Hashtable <K,V> {
     }
     
     /* Not an efficient hash function for rehasing. 
-       Table size is a factor of 2 */
+       Table capacity is a factor of 2 */
     private int hash(K key) {
 	return  key.hashCode() % capacity;
     }
