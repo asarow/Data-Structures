@@ -32,6 +32,19 @@ public class SuperString {
 	return isPalindrome;
     }
 
+    public boolean isUnique() {
+	if (string.length() > 256) return false;
+	
+	boolean[] possibleChars = new boolean[256];
+	for (int i = 0; i < string.length(); ++i) {
+	    if (possibleChars[string.charAt(i)]) {
+		return false;
+	    }
+	    possibleChars[string.charAt(i)] = true;
+	}
+	return true;
+    }
+
     public void print() {
 	System.out.println(string);
     }
