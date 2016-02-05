@@ -7,13 +7,13 @@ import java.util.ArrayList;
 */
 public class Hashtable <K,V> {
     private ArrayList<Entry> entry;
-    private int capacity;
-    private int size;
+    private int capacity, size;
+    private final double LOAD_LIMIT = 0.75;
 
     @SuppressWarnings("unchecked")
     Hashtable(int capacity) {
 	this.size = 0;
-	this.capacity = capacity;;
+	this.capacity = capacity;
 	entry = new ArrayList<Entry>();
 	initializeTable();
     }
@@ -70,6 +70,9 @@ public class Hashtable <K,V> {
 	Entry newEntry = new Entry(key, value, curr, null);
 	curr.setNext(newEntry);
 	size++;	
+	
+	if (loadFactor() >= LOAD_LIMIT) 
+	    rehash();
     }   
 
     public double loadFactor() {
@@ -98,7 +101,9 @@ public class Hashtable <K,V> {
 	    } System.out.println();
 	}
     }
-
+    
+    /* Not an efficient hash function for rehasing. 
+       Table size is a factor of 2 */
     private int hash(K key) {
 	return  key.hashCode() % capacity;
     }
@@ -106,6 +111,20 @@ public class Hashtable <K,V> {
     private void initializeTable() {
 	for (int i = 0; i < this.capacity; ++i) {
 	    entry.add(new Entry(null, null, null, null));
+	}
+    }
+
+    private void rehash() {
+	ArrayList<Entry> oldEntry = entry;
+	entry = new ArrayList<Entry>(capacity*2);
+	initializeTable();
+	this.capacity *= 2;
+	
+	for (int i = 0; i < oldEntry.size(); ++i) {
+	    if (oldEntry.get(i).getNext() == null)
+		continue;
+	    int newIndex = hash(oldEntry.get(i).getNext().getKey());
+	    entry.add(newIndex, oldEntry.get(i));
 	}
     }
 }
