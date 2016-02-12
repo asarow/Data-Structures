@@ -73,6 +73,13 @@ public class BST <E> {
     
     /* Begin BST Implementation */
 
+    /* Uncomment to test BST validity 
+    public void falseBST(E falseLeft, E falseRight, E falseData) {
+	root = new BSTNode(new BSTNode(falseLeft), new BSTNode(falseRight) 
+			   ,null, falseData);	
+    }
+    */
+    
     // Does not guarantee balance
     public void randomInsert(List<E> data) {
 	Collections.shuffle(data);
@@ -193,6 +200,9 @@ public class BST <E> {
 	return (Math.abs(leftSubtreeHeight-rightSubtreeHeight) < 2 ? true : false);
     }
 
+    public boolean isBst() {
+	return recursiveBSTCheck(root);
+    }
     //Begin helper methods
 
     private boolean recursiveInsert(BSTNode node, E data) {
@@ -215,6 +225,21 @@ public class BST <E> {
 	} else {
 	    return false;
 	}
+    }
+
+    private boolean recursiveBSTCheck(BSTNode root) {
+	if (root == null) return true;
+	if (root.getLeftChild() != null) {
+	    if (root.compareTo(root.getLeftChild().getData()) == -1) 
+		return false;
+	}
+
+	if (root.getRightChild() != null) {
+	    if (root.compareTo(root.getRightChild().getData()) == 1)
+		return false;
+	}
+
+	return recursiveBSTCheck(root.getLeftChild()) && recursiveBSTCheck(root.getRightChild());
     }
 
     private boolean recursiveFind(BSTNode node, E data) {
