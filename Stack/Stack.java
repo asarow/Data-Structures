@@ -58,6 +58,40 @@ public class Stack <E> {
     public E peek() {
 	return top.getNext().getData();
     }
+
+    /* Sorts data (Integer only) into a temporary
+       stack and displays the sorted data. Does not
+       sort this stack. 
+    */
+
+    public void sort() {
+	if (size < 2) {
+	    this.display();
+	    return;
+	}
+
+	Stack<E> s2 = new Stack<E>();
+	final int maxSize = this.size;
+	
+	while(s2.size() != maxSize) {
+	    while (!this.isEmpty() && !s2.isEmpty() && 
+		   (Integer)this.peek() > (Integer)s2.peek()) {
+		s2.push(this.pop());
+	    }
+
+	    E tempNum = this.pop();
+	    
+	    while(!s2.isEmpty() && (Integer)s2.peek() > (Integer) tempNum) {
+		this.push(s2.pop());
+	    }
+	    s2.push(tempNum);
+	    
+	    while(!this.isEmpty() && (Integer)this.peek() > (Integer)s2.peek()) {
+		s2.push(this.pop());
+	    }
+	}
+	s2.display();
+    }
     
     public boolean isEmpty() {
 	return this.size == 0;
