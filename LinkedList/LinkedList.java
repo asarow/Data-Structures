@@ -149,6 +149,21 @@ public class LinkedList<E> {
 	    } curr = curr.getNext();
 	}
     }
+    
+    public void printKthToLast(int k) {
+	final int index = size-k;
+	if (index < 0 || index > size-1) return;
+
+	Node curr = head;
+	int counter = 0;
+	while (counter < index) {
+	    curr = curr.getNext();
+	    counter++;
+	}
+
+	System.out.println(curr.getNext().getData());
+    }
+
 
     /* Using this method breaks a the doubly-linked
        list implementation. */
