@@ -132,8 +132,22 @@ public class LinkedList<E> {
 	return (fastPointer == slowPointer);
     }
     
-    public void sort() {
+    
+    /* Only works with Integers */
+    public void removeDuplicates() {
+	Node curr = head.getNext();
 	
+	while(curr.getNext() != null) {
+	    Node temp = curr;
+	    while(temp.getNext() != null) {
+		if ((Integer) curr.getData() == (Integer) temp.getNext().getData()) {
+		    temp.setNext(temp.getNext().getNext());
+		    size--;
+		}
+		
+		temp = temp.getNext();
+	    } curr = curr.getNext();
+	}
     }
 
     /* Using this method breaks a the doubly-linked
