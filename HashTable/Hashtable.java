@@ -102,8 +102,7 @@ public class Hashtable <K,V> {
 	}
     }
     
-    /* Not an efficient hash function for rehasing. 
-       Table capacity is a factor of 2 */
+    /* Not an efficient hash function for rehashing. */
     private int hash(K key) {
 	return  key.hashCode() % capacity;
     }
@@ -113,7 +112,9 @@ public class Hashtable <K,V> {
 	    entry.add(new Entry(null, null, null, null));
 	}
     }
-
+    
+    /* Not necessary for an arrayList but is done
+       to simulate rehashing with an array */
     private void rehash() {
 	ArrayList<Entry> oldEntry = entry;
 	entry = new ArrayList<Entry>(capacity*2);
