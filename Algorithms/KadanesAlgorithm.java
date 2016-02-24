@@ -1,4 +1,9 @@
 import java.util.Scanner;
+
+/**
+ * Kadane's Algorithm for finding the maximum sum
+ * subarray.
+ */
 public class KadanesAlgorithm {
     public static int findMaxSumSubarray(int[] array) {
 	int maxSum = 0;
@@ -22,6 +27,5 @@ public class KadanesAlgorithm {
 
 	int maxSumSubarray = findMaxSumSubarray(array);
 	System.out.println(maxSumSubarray);
-    }
-    
+    }    
 }
