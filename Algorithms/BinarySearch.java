@@ -1,14 +1,15 @@
 import java.util.Scanner;
 import java.util.Random;
 import java.util.Arrays;
+
 /**
  * Binary search in a sorted array.
  */
-
 public class BinarySearch {
     /* Note: Overflow is possible for max integer and 
        stack overflow is possible for value not found */
     public static int  binarySearch(int num, int[] array, int begin, int end) {
+	if (begin > end) return -1;
 	int middlePoint = (end + begin)/2;
 	
 	if (array[middlePoint] == num) return num;
