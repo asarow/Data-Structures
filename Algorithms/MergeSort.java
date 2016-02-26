@@ -12,7 +12,6 @@ public class MergeSort {
 	return mergeArr;
     }
 
-
     private static void split(int low, int high) {
 	if (low < high) {
 	    int middle = (low + high)/2;
@@ -23,6 +22,7 @@ public class MergeSort {
 	    merge(low, middle, high);
 	}
     }
+
     private static void merge(int low, int middle, int high) {
 	for (int i = low; i <= high; ++i) {
 	    temp[i] = mergeArr[i];
@@ -37,16 +37,13 @@ public class MergeSort {
 	    }
 	}
 	
-	
-	while(i <= middle) {
+       	while(i <= middle) {
 	    mergeArr[k++] = temp[i++];
 	}	
-
 	
 	while(j <= high) {
 	    mergeArr[k++] = temp[j++];
-	}
-	
+	}	
     }
 
     public static void main(String[] args) {
